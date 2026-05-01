@@ -17,7 +17,7 @@ const initialState: IBottomIconsSlice = {
   isActiveWhiteboard: false,
   isActiveInsightsAiTextChat: false,
 
-  activeSidePanel: 'PARTICIPANTS',
+  activeSidePanel: null,
 
   isMicMuted: false,
   screenWidth: 1024,

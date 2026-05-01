@@ -5,6 +5,7 @@ import { viteStaticCopy, ViteStaticCopyOptions } from 'vite-plugin-static-copy';
 import tailwindcss from '@tailwindcss/vite';
 import oxlintPlugin from 'vite-plugin-oxlint';
 import cleanPlugin from 'vite-plugin-clean';
+import { readFileSync, mkdirSync, writeFileSync } from 'fs';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const BUILD_INTERVAL = 1500;
@@ -55,6 +56,7 @@ export default defineConfig({
     cleanPlugin({
       targetFiles: ['dist/assets/js', 'dist/assets/css', 'dist/assets/chunks'],
     }),
+    wellKnownPlugin(),
   ],
   define: {
     IS_PRODUCTION: isProduction,
@@ -151,5 +153,42 @@ function getStaticFilesToCopy(): ViteStaticCopyOptions {
         dest: './',
       },
     ],
+  };
+}
+
+function wellKnownPlugin() {
+  return {
+    name: 'well-known-serve',
+    configureServer(server: any) {
+      server.middlewares.use(
+        '/.well-known/apple-app-site-association',
+        (req: any, res: any) => {
+          res.setHeader('Content-Type', 'application/json');
+          try {
+            const filePath = join(
+              __dirname,
+              'src/assets/.well-known/apple-app-site-association.json',
+            );
+            const content = readFileSync(filePath, 'utf-8');
+            res.end(content);
+          } catch {
+            res.statusCode = 404;
+            res.end('Not found');
+          }
+        },
+      );
+    },
+    writeBundle() {
+      const src = join(
+        __dirname,
+        'src/assets/.well-known/apple-app-site-association.json',
+      );
+      const destDir = join(__dirname, 'dist/.well-known');
+      mkdirSync(destDir, { recursive: true });
+      writeFileSync(
+        join(destDir, 'apple-app-site-association'),
+        readFileSync(src),
+      );
+    },
   };
 }

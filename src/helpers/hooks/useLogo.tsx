@@ -18,10 +18,10 @@ const useLogo = () => {
   );
 
   const [logo, setLogo] = useState<string>(
-    `${assetPath}/imgs/main-logo-light.png`,
+    `${assetPath}/imgs/timbrul-icon-text.png`,
   );
   const [darkLogo, setDarkLogo] = useState<string>(
-    `${assetPath}/imgs/main-logo-dark.png`,
+    `${assetPath}/imgs/timbrul-icon-text.png`,
   );
 
   useEffect(() => {

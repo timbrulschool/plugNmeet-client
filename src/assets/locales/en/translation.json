@@ -261,6 +261,8 @@
       "show-chat-panel": "Show Chat",
       "hide-ai-chat-panel": "Hide AI Assistant",
       "show-ai-chat-panel": "Show AI Assistant",
+      "mute-all": "Mute All Audio",
+      "unmute-all": "Unmute All Audio",
       "stop-screen-sharing": "Stop Sharing Screen",
       "start-screen-sharing": "Share Screen",
       "screen-sharing-locked": "Screen Sharing Locked",
@@ -309,6 +311,8 @@
     },
     "notice": {
       "already-active-screen-sharing": "Someone is already sharing their screen.",
+      "screen-share-not-supported": "Screen sharing is not supported by your browser.",
+      "screen-share-error": "Failed to share screen. Please check your browser permissions.",
       "start-recording-progress": "Starting the recording...",
       "recording-not-start": "The recording could not be started.",
       "stop-recording-service-in-progress": "Stopping the recording...",

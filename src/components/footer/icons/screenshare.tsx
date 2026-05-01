@@ -111,6 +111,17 @@ const ScrenshareIcon = () => {
         return;
       }
 
+      if (!navigator.mediaDevices?.getDisplayMedia) {
+        dispatch(
+          addUserNotification({
+            message: t('footer.notice.screen-share-not-supported'),
+            typeOption: 'error',
+          }),
+        );
+        isPublishing.current = false;
+        return;
+      }
+
       const option: ScreenShareCaptureOptions = {
         audio: true,
       };
@@ -123,19 +134,28 @@ const ScrenshareIcon = () => {
         option.resolution = getScreenShareResolution();
       }
 
-      const localTracks = await createLocalScreenTracks(option);
-      for (let i = 0; i < localTracks.length; i++) {
-        const track = localTracks[i];
-        await currentRoom.localParticipant.publishTrack(track);
-      }
+      try {
+        const localTracks = await createLocalScreenTracks(option);
+        for (let i = 0; i < localTracks.length; i++) {
+          const track = localTracks[i];
+          await currentRoom.localParticipant.publishTrack(track);
+        }
 
-      dispatch(updateIsActiveScreenshare(true));
-      dispatch(
-        updateScreenSharing({
-          isActive: true,
-          sharedBy: currentRoom.localParticipant.identity,
-        }),
-      );
+        dispatch(updateIsActiveScreenshare(true));
+        dispatch(
+          updateScreenSharing({
+            isActive: true,
+            sharedBy: currentRoom.localParticipant.identity,
+          }),
+        );
+      } catch {
+        dispatch(
+          addUserNotification({
+            message: t('footer.notice.screen-share-error'),
+            typeOption: 'error',
+          }),
+        );
+      }
       isPublishing.current = false;
     } else {
       await endScreenShare();

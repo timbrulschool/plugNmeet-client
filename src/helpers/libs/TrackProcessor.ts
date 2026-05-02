@@ -20,6 +20,8 @@ const assetPath = getConfigValue(
 );
 const vbPaths = `${assetPath}/backgrounds/assets`;
 
+// ─── Twilio virtual-background processor (blur / image) ──────────────────────
+
 class TwilioTrackProcessor implements TrackProcessor<Track.Kind.Video> {
   name = 'pnm-virtual-background';
 
@@ -28,14 +30,19 @@ class TwilioTrackProcessor implements TrackProcessor<Track.Kind.Video> {
     | VirtualBackgroundProcessor
     | null = null;
   private sourceElement: HTMLVideoElement | undefined = undefined;
+  // Twilio draws to intermediateCanvas; we optionally flip before copying to canvas.
   private canvas = document.createElement('canvas');
+  private intermediateCanvas = document.createElement('canvas');
   private isProcessing = false;
-  private isDestroyed = false; // Flag to prevent multiple destroys.
+  private isDestroyed = false;
   private loopPromise: Promise<void> | null = null;
 
   readonly processedTrack: MediaStreamTrack;
 
-  constructor(private backgroundConfig: BackgroundConfig) {
+  constructor(
+    private backgroundConfig: BackgroundConfig,
+    private mirror: boolean = false,
+  ) {
     this.processedTrack = this.canvas.captureStream().getVideoTracks()[0];
   }
 
@@ -60,11 +67,9 @@ class TwilioTrackProcessor implements TrackProcessor<Track.Kind.Video> {
     try {
       const imageUrl = new URL(src, window.location.href);
       if (imageUrl.origin !== window.location.origin) {
-        // not the same origin
         img.crossOrigin = 'anonymous';
       }
     } catch (e) {
-      // This will catch malformed URLs that the constructor can't parse.
       console.error(`[loadImage] Invalid URL provided: ${src}`, e);
       return null;
     }
@@ -109,22 +114,36 @@ class TwilioTrackProcessor implements TrackProcessor<Track.Kind.Video> {
         !this.sourceElement ||
         this.sourceElement.videoWidth === 0
       ) {
-        // Source is not ready, wait briefly to avoid a busy loop.
         await new Promise((resolve) => setTimeout(resolve, 50));
         continue;
       }
 
-      if (
-        this.canvas.width !== this.sourceElement.videoWidth ||
-        this.canvas.height !== this.sourceElement.videoHeight
-      ) {
-        this.canvas.width = this.sourceElement.videoWidth;
-        this.canvas.height = this.sourceElement.videoHeight;
+      const w = this.sourceElement.videoWidth;
+      const h = this.sourceElement.videoHeight;
+
+      if (this.canvas.width !== w || this.canvas.height !== h) {
+        this.canvas.width = w;
+        this.canvas.height = h;
+        this.intermediateCanvas.width = w;
+        this.intermediateCanvas.height = h;
       }
 
       try {
-        // Await the frame processing. The loop will continue immediately after.
-        await this.processor.processFrame(this.sourceElement, this.canvas);
+        await this.processor.processFrame(
+          this.sourceElement,
+          this.intermediateCanvas,
+        );
+
+        const ctx = this.canvas.getContext('2d')!;
+        if (this.mirror) {
+          ctx.save();
+          ctx.translate(w, 0);
+          ctx.scale(-1, 1);
+          ctx.drawImage(this.intermediateCanvas, 0, 0);
+          ctx.restore();
+        } else {
+          ctx.drawImage(this.intermediateCanvas, 0, 0);
+        }
       } catch (e) {
         console.error('Failed to process frame for virtual background', e);
         this.isProcessing = false;
@@ -167,13 +186,11 @@ class TwilioTrackProcessor implements TrackProcessor<Track.Kind.Video> {
   }
 
   async update(backgroundConfig: BackgroundConfig) {
-    // If the new type is 'none', it's a signal to stop and clean up completely.
     if (backgroundConfig.type === 'none') {
       await this.destroy();
       return;
     }
 
-    // Otherwise, update to the new background.
     this.isProcessing = false;
     if (this.loopPromise) {
       await this.loopPromise;
@@ -191,11 +208,9 @@ class TwilioTrackProcessor implements TrackProcessor<Track.Kind.Video> {
   }
 
   async destroy() {
-    // Prevent the destroy logic from running multiple times.
     if (this.isDestroyed) {
       return;
     }
-    // Set the flag immediately to prevent race conditions.
     this.isDestroyed = true;
 
     this.isProcessing = false;
@@ -208,15 +223,116 @@ class TwilioTrackProcessor implements TrackProcessor<Track.Kind.Video> {
   }
 }
 
-// Factory function to create a new processor with the given config.
+// ─── Standalone mirror processor (no background change, just flip) ────────────
+
+class MirrorProcessor implements TrackProcessor<Track.Kind.Video> {
+  name = 'pnm-mirror';
+
+  private canvas = document.createElement('canvas');
+  private sourceElement: HTMLVideoElement | undefined = undefined;
+  private isProcessing = false;
+  private isDestroyed = false;
+  private loopPromise: Promise<void> | null = null;
+
+  readonly processedTrack: MediaStreamTrack;
+
+  constructor() {
+    this.processedTrack = this.canvas.captureStream().getVideoTracks()[0];
+  }
+
+  async init(opts: VideoProcessorOptions) {
+    this.sourceElement =
+      (opts.element as HTMLVideoElement) ?? document.createElement('video');
+    this.sourceElement.srcObject = new MediaStream([opts.track]);
+    this.sourceElement.autoplay = true;
+    this.sourceElement.muted = true;
+    await this.sourceElement.play();
+    this.startLoop();
+  }
+
+  private renderLoop = async () => {
+    while (this.isProcessing) {
+      const src = this.sourceElement;
+      if (!src || src.videoWidth === 0 || src.readyState < 2) {
+        await new Promise<void>((r) => setTimeout(r, 50));
+        continue;
+      }
+
+      const w = src.videoWidth;
+      const h = src.videoHeight;
+
+      if (this.canvas.width !== w || this.canvas.height !== h) {
+        this.canvas.width = w;
+        this.canvas.height = h;
+      }
+
+      const ctx = this.canvas.getContext('2d')!;
+      ctx.save();
+      ctx.translate(w, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(src, 0, 0, w, h);
+      ctx.restore();
+
+      await new Promise<void>((r) => setTimeout(r, 0));
+    }
+  };
+
+  private startLoop() {
+    this.isProcessing = true;
+    this.loopPromise = this.renderLoop();
+  }
+
+  private cleanupSourceStream() {
+    if (this.sourceElement?.srcObject) {
+      this.sourceElement.pause();
+      (this.sourceElement.srcObject as MediaStream)
+        .getTracks()
+        .forEach((t) => t.stop());
+      this.sourceElement.srcObject = null;
+    }
+  }
+
+  async restart(opts: VideoProcessorOptions) {
+    this.isProcessing = false;
+    if (this.loopPromise) await this.loopPromise;
+    this.cleanupSourceStream();
+    this.sourceElement!.srcObject = new MediaStream([opts.track]);
+    await this.sourceElement!.play();
+    this.startLoop();
+  }
+
+  async onUnpublish() {
+    await this.destroy();
+  }
+
+  async destroy() {
+    if (this.isDestroyed) return;
+    this.isDestroyed = true;
+    this.isProcessing = false;
+    if (this.loopPromise) await this.loopPromise;
+    this.cleanupSourceStream();
+    this.processedTrack?.stop();
+  }
+}
+
+// ─── Factories ────────────────────────────────────────────────────────────────
+
 export function createVirtualBackgroundProcessor(
   backgroundConfig: BackgroundConfig,
+  mirror: boolean = false,
 ): TwilioTrackProcessor {
-  return new TwilioTrackProcessor(backgroundConfig);
+  return new TwilioTrackProcessor(backgroundConfig, mirror);
 }
-export type TwilioBackgroundProcessor = TwilioTrackProcessor;
 
-// run during application bootup and cache, so next time it will be faster
+export function createMirrorProcessor(): MirrorProcessor {
+  return new MirrorProcessor();
+}
+
+export type TwilioBackgroundProcessor = TwilioTrackProcessor;
+export type MirrorTrackProcessor = MirrorProcessor;
+
+// ─── Pre-load models at boot so first activation is fast ─────────────────────
+
 if (isSupported) {
   (async () => {
     try {
@@ -224,7 +340,6 @@ if (isSupported) {
         assetsPath: vbPaths,
       });
 
-      // create a blank image
       const blankImage = new Image();
       blankImage.src =
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';

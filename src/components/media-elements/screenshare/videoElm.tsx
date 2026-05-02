@@ -1,13 +1,5 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { LocalTrackPublication, RemoteTrackPublication } from 'livekit-client';
-import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
 
 import './style.css';
 import { useAppSelector } from '../../../store';
@@ -18,13 +10,11 @@ interface IVideoElmProps {
 }
 
 const VideoElm = ({ track }: IVideoElmProps) => {
-  const { t } = useTranslation();
   const ref = useRef<HTMLVideoElement>(null);
   const isNatsServerConnected = useAppSelector(
     (state) => state.roomSettings.isNatsServerConnected,
   );
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const self = useMemo(() => track instanceof LocalTrackPublication, [track]);
 
   useEffect(() => {
     const el = ref.current;
@@ -88,17 +78,8 @@ const VideoElm = ({ track }: IVideoElmProps) => {
       <video
         onLoadedData={onLoadedData}
         ref={ref}
-        className={clsx('video-player absolute', {
-          'self-screen-share !w-auto !h-52 !left-1/2 !top-1/2 !-translate-x-1/2 !-translate-y-1/2':
-            self,
-          'remote-screen-share': !self,
-        })}
+        className="video-player absolute remote-screen-share"
       />
-      {self && (
-        <div className="text-sm 3xl:text-base text-Gray-950 dark:text-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full pt-64">
-          {t('notifications.you-are-sharing-screen')}
-        </div>
-      )}
     </div>
   );
 };

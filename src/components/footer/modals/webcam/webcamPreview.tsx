@@ -4,7 +4,7 @@ import { createLocalVideoTrack, LocalVideoTrack } from 'livekit-client';
 import { useAppSelector } from '../../../../store';
 import {
   createVirtualBackgroundProcessor,
-  TwilioBackgroundProcessor,
+  createMirrorProcessor,
 } from '../../../../helpers/libs/TrackProcessor';
 import { getWebcamResolution } from '../../../../helpers/utils';
 
@@ -19,6 +19,9 @@ const WebcamPreview = ({ deviceId }: WebcamPreviewProps) => {
   const virtualBackground = useAppSelector(
     (state) => state.bottomIconsActivity.virtualBackground,
   );
+  const mirrorCamera = useAppSelector(
+    (state) => state.bottomIconsActivity.mirrorCamera,
+  );
 
   useEffect(() => {
     if (deviceId && videoRef.current) {
@@ -28,14 +31,18 @@ const WebcamPreview = ({ deviceId }: WebcamPreviewProps) => {
         localVideoTrack.current.stop();
       }
 
-      let processor: TwilioBackgroundProcessor | undefined;
+      let processor:
+        | ReturnType<typeof createVirtualBackgroundProcessor>
+        | ReturnType<typeof createMirrorProcessor>
+        | undefined;
       const resolution = getWebcamResolution();
       if (virtualBackground.type !== 'none') {
-        processor = createVirtualBackgroundProcessor(virtualBackground);
-        resolution.height = 480;
-        resolution.width = 640;
-        resolution.frameRate = 24;
-        resolution.aspectRatio = undefined;
+        processor = createVirtualBackgroundProcessor(
+          virtualBackground,
+          mirrorCamera,
+        );
+      } else if (mirrorCamera) {
+        processor = createMirrorProcessor();
       }
 
       createLocalVideoTrack({
@@ -59,7 +66,7 @@ const WebcamPreview = ({ deviceId }: WebcamPreviewProps) => {
         });
       }
     };
-  }, [deviceId, virtualBackground]);
+  }, [deviceId, virtualBackground, mirrorCamera]);
 
   useEffect(() => {
     return () => {

@@ -1,15 +1,11 @@
 import { useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../store';
-import { updateTheme } from '../../store/slices/roomSettingsSlice';
+import { useAppSelector } from '../../store';
+
+const THEME_STORAGE_KEY = 'plugnmeet_theme';
 
 const useThemeSettings = () => {
   const theme = useAppSelector((state) => state.roomSettings.theme);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(updateTheme('light'));
-  }, [dispatch]);
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -17,6 +13,7 @@ const useThemeSettings = () => {
     } else {
       document.querySelector('body')?.classList.remove('dark');
     }
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 };
 

@@ -16,7 +16,6 @@ import RecordingIcon from './icons/recording';
 import PollsIcon from './icons/polls';
 import Translation from './icons/translation';
 import InsightsAiTextChatIcon from './icons/insightAiTextChat';
-import MuteAllIcon from './icons/muteAll';
 
 const Footer = () => {
   const { isAdmin, isRecorder, allowChat } = useMemo(() => {
@@ -31,7 +30,7 @@ const Footer = () => {
   return (
     <footer
       id="main-footer"
-      className={`px-2 md:px-4 flex items-center justify-between bg-Gray-25 dark:border-Gray-800 dark:bg-dark-primary h-[54px] 3xl:h-[76px] border-t border-Gray-200 relative z-[100] ${
+      className={`px-2 md:px-4 flex items-center justify-between bg-Gray-25 dark:border-Gray-800 dark:bg-dark-primary h-[54px] 3xl:h-[76px] border-t border-Gray-200 relative z-100 ${
         isRecorder ? 'hidden' : ''
       }`}
     >
@@ -39,7 +38,7 @@ const Footer = () => {
         <div className="footer-left w-[155px] lg:w-72 flex items-center gap-1 3xl:gap-2 relative z-50 rtl:justify-end">
           <MicrophoneIcon />
           <WebcamIcon />
-          <MuteAllIcon />
+          {/* <MuteAllIcon /> */}
         </div>
 
         <div className="footer-middle flex items-center gap-1 3xl:gap-2">

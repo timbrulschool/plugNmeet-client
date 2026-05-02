@@ -36,5 +36,6 @@ export interface IBottomIconsSlice {
 
   totalUnreadChatMsgs: number;
   virtualBackground: BackgroundConfig;
+  mirrorCamera: boolean;
   isEnabledExtendedVerticalCamView: boolean;
 }

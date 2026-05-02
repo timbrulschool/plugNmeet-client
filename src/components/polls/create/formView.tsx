@@ -1,4 +1,4 @@
-import React, {
+import {
   Dispatch,
   FormEvent,
   SetStateAction,
@@ -112,14 +112,14 @@ const FormView = ({ setIsOpen }: FormViewProps) => {
       )}
       <div className="button-section flex items-center gap-2 md:gap-5 pt-4 border-t border-Gray-100 dark:border-Gray-800">
         <button
-          className="secondary-button w-full cursor-pointer h-10 3xl:h-11 text-sm 3xl:text-base font-semibold bg-Gray-25 hover:bg-Blue hover:text-white border border-Gray-300 rounded-[15px] flex justify-center items-center gap-2 transition-all duration-300 shadow-button-shadow"
+          className="secondary-button w-full cursor-pointer h-10 3xl:h-11 text-sm 3xl:text-base font-semibold bg-Gray-25 hover:bg-Blue hover:text-white border border-Gray-300 rounded flex justify-center items-center gap-2 transition-all duration-300 shadow-button-shadow"
           type="button"
           onClick={() => setIsOpen(false)}
         >
           {t('close')}
         </button>
         <button
-          className="primary-button w-full cursor-pointer h-10 3xl:h-11 text-sm 3xl:text-base font-semibold bg-Blue hover:bg-white border border-[#0088CC] rounded-[15px] text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+          className="primary-button w-full cursor-pointer h-10 3xl:h-11 text-sm 3xl:text-base font-semibold bg-Blue hover:bg-white border border-[#0088CC] rounded text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow disabled:opacity-50 disabled:cursor-not-allowed"
           type="submit"
           disabled={isLoading}
         >

@@ -166,11 +166,11 @@ const BreakoutRoomInvitation = () => {
                         type="text"
                         readOnly={true}
                         value={joinLink}
-                        className="border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-dark-primary shadow-input block px-3 py-2 w-full h-7 rounded-[15px] outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus text-white hover:text-Gray-950"
+                        className="border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-dark-primary shadow-input block px-3 py-2 w-full h-7 rounded outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus text-white hover:text-Gray-950"
                       />
                       <button
                         onClick={copyUrl}
-                        className="primary-button h-7 ml-auto px-5 cursor-pointer text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded-[15px] text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow"
+                        className="primary-button h-7 ml-auto px-5 cursor-pointer text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow"
                       >
                         {copyText}
                       </button>
@@ -180,7 +180,7 @@ const BreakoutRoomInvitation = () => {
 
                 <div className="button-section flex items-center justify-start mt-4">
                   <button
-                    className="primary-button h-7 ml-auto px-5 cursor-pointer text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded-[15px] text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="primary-button h-7 ml-auto px-5 cursor-pointer text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={join}
                     disabled={isLoading}
                   >

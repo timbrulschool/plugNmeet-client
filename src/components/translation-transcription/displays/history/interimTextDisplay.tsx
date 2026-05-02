@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { throttle } from 'es-toolkit';
-
 import { useAppSelector } from '../../../../store';
 
 interface IInterimTextDisplayProps {
@@ -31,7 +30,7 @@ const InterimTextDisplay = ({ scrollToBottom }: IInterimTextDisplayProps) => {
           <span>{interimText.from}</span>
           <span className="font-normal">{interimText.time}</span>
         </p>
-        <p className="message-content w-full p-2 border border-white/10 bg-white/10 rounded-[15px] rounded-tl-none">
+        <p className="message-content w-full p-2 border border-white/10 bg-white/10 rounded rounded-tl-none">
           {interimText.text}
         </p>
       </div>

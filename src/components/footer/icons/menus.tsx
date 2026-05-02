@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Menu, MenuButton, MenuItems, Transition } from '@headlessui/react';
 
 import { useAppSelector } from '../../../store';
@@ -53,10 +53,10 @@ const MenusIcon = ({ isAdmin }: MenusIconProps) => {
             <div>
               <MenuButton>
                 <div
-                  className={`footer-menu relative footer-icon cursor-pointer w-10 md:w-11 3xl:w-[52px] h-10 md:h-11 3xl:h-[52px] rounded-[15px] 3xl:rounded-[18px] border-[3px] 3xl:border-4 ${open ? 'border-[rgba(124,206,247,0.25)] dark:border-Gray-800' : 'border-transparent'}`}
+                  className={`footer-menu relative footer-icon cursor-pointer w-10 md:w-11 3xl:w-[52px] h-10 md:h-11 3xl:h-[52px] rounded 3xl:rounded border-[3px] 3xl:border-4 ${open ? 'border-[rgba(124,206,247,0.25)] dark:border-Gray-800' : 'border-transparent'}`}
                 >
                   <div
-                    className={`footer-icon-bg relative footer-icon flex items-center justify-center cursor-pointer w-full h-full rounded-[12px] 3xl:rounded-[15px] border border-Gray-300 dark:border-Gray-700 shadow-sm transition-all duration-300 hover:bg-gray-100 text-Gray-950 dark:text-white ${open ? 'bg-gray-100 dark:bg-Gray-700' : 'bg-white dark:bg-Gray-800'}`}
+                    className={`footer-icon-bg relative footer-icon flex items-center justify-center cursor-pointer w-full h-full rounded 3xl:rounded border border-Gray-300 dark:border-Gray-700 shadow-sm transition-all duration-300 hover:bg-gray-100 text-Gray-950 dark:text-white ${open ? 'bg-gray-100 dark:bg-Gray-700' : 'bg-white dark:bg-Gray-800'}`}
                   >
                     <FooterMenuIconSVG />
                   </div>
@@ -74,7 +74,7 @@ const MenusIcon = ({ isAdmin }: MenusIconProps) => {
               >
                 <MenuItems
                   static={false}
-                  className="origin-bottom-left -right-11 lg:left-0 z-9999 absolute mt-2 w-[300px] bottom-14 shadow-dropdown-menu rounded-[15px] overflow-hidden border border-Gray-100 dark:border-Gray-700 bg-white dark:bg-dark-primary p-2"
+                  className="origin-bottom-left -right-11 lg:left-0 z-9999 absolute mt-2 w-[300px] bottom-14 shadow-dropdown-menu rounded overflow-hidden border border-Gray-100 dark:border-Gray-700 bg-white dark:bg-dark-primary p-2"
                   id="footer-menu"
                 >
                   <div className="inner">

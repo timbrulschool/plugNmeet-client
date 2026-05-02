@@ -1,13 +1,6 @@
-import React, {
-  Dispatch,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
 import { PopoverPanel } from '@headlessui/react';
 import { useTranslation } from 'react-i18next';
-
 import { store, useAppSelector } from '../../../../store';
 import { DownloadIconSVG } from '../../../../assets/Icons/DownloadIconSVG';
 import { CloseIconSVG } from '../../../../assets/Icons/CloseIconSVG';
@@ -172,7 +165,7 @@ const SubtitleHistoryPanel = ({
                 <span>{t.from}</span>
                 <span className="font-normal">{t.time}</span>
               </p>
-              <p className="message-content w-full p-2 border border-white/10 bg-white/10 rounded-[15px] rounded-tl-none">
+              <p className="message-content w-full p-2 border border-white/10 bg-white/10 rounded rounded-tl-none">
                 {t.text}
               </p>
             </div>

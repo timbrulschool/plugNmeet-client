@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import {
   Field,
   Label,
@@ -102,7 +102,7 @@ const Dropdown = ({
               >
                 <ListboxOptions
                   static
-                  className="absolute z-20 mt-1 max-h-60 w-72 ltr:right-0 rtl:left-0 overflow-auto rounded-[15px] bg-white p-1 text-sm shadow-dropdown-menu border border-Gray-100 dark:border-Gray-800 focus:outline-hidden scrollBar scrollBar2 grid gap-0.5 dark:bg-dark-secondary"
+                  className="absolute z-20 mt-1 max-h-60 w-72 ltr:right-0 rtl:left-0 overflow-auto rounded bg-white p-1 text-sm shadow-dropdown-menu border border-Gray-100 dark:border-Gray-800 focus:outline-hidden scrollBar scrollBar2 grid gap-0.5 dark:bg-dark-secondary"
                 >
                   {options.map((option) => (
                     <ListboxOption
@@ -180,7 +180,7 @@ const Dropdown = ({
           >
             <ListboxOptions
               static
-              className="absolute z-20 mt-1 max-h-60 w-full ltr:right-0 rtl:left-0 overflow-auto rounded-[15px] bg-white p-1 text-sm shadow-dropdown-menu border border-Gray-100 dark:border-Gray-800 focus:outline-hidden scrollBar scrollBar2 grid gap-0.5 dark:bg-dark-secondary"
+              className="absolute z-20 mt-1 max-h-60 w-full ltr:right-0 rtl:left-0 overflow-auto rounded bg-white p-1 text-sm shadow-dropdown-menu border border-Gray-100 dark:border-Gray-800 focus:outline-hidden scrollBar scrollBar2 grid gap-0.5 dark:bg-dark-secondary"
             >
               {options.map((option) => (
                 <ListboxOption

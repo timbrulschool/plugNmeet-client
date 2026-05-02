@@ -38,6 +38,7 @@ const initialState: IBottomIconsSlice = {
 
   totalUnreadChatMsgs: 0,
   virtualBackground: { type: 'none' },
+  mirrorCamera: true,
   isEnabledExtendedVerticalCamView: false,
 };
 
@@ -173,6 +174,9 @@ const bottomIconsSlice = createSlice({
     ) => {
       state.virtualBackground = action.payload;
     },
+    updateMirrorCamera: (state, action: PayloadAction<boolean>) => {
+      state.mirrorCamera = action.payload;
+    },
     updateIsEnabledExtendedVerticalCamView: (
       state,
       action: PayloadAction<boolean>,
@@ -206,6 +210,7 @@ export const {
   updateDeviceOrientation,
   updateTotalUnreadChatMsgs,
   updateVirtualBackground,
+  updateMirrorCamera,
   updateDisplaySpeechSettingsModal,
   updateDisplaySpeechSettingOptionsModal,
   updateIsEnabledExtendedVerticalCamView,

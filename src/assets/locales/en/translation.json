@@ -248,6 +248,7 @@
     "show-footer": "Show footer",
     "icons": {
       "select-webcam": "Select webcam",
+      "background": "Background",
       "start-webcam": "Turn On Camera",
       "turn-off-webcam": "Turn Off Camera",
       "webcam-locked": "Camera Locked",
@@ -360,7 +361,8 @@
       "external-media-player-select-file": "Select a media file to upload",
       "upload-background-image": "Upload background image",
       "shared-notepad": "Shared Notepad",
-      "chose-virtual-bg": "Choose Background"
+      "chose-virtual-bg": "Choose Background",
+      "mirror-camera": "Mirror camera"
     }
   },
   "whiteboard": {

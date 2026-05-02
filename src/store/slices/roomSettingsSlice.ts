@@ -31,7 +31,7 @@ const initialState: IRoomSettings = {
   roomAudioVolume: 1,
   roomScreenShareAudioVolume: 1,
   roomVideoQuality: VideoQuality.HIGH,
-  theme: 'light',
+  theme: (localStorage.getItem('plugnmeet_theme') as Theme) ?? 'light',
   videoObjectFit: VideoObjectFit.CONTAIN,
 
   selectedTabLeftPanel: 0,

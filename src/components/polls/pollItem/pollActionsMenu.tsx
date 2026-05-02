@@ -55,7 +55,7 @@ const PollActionsMenu = ({
           >
             <MenuItems
               static
-              className="origin-top-right z-20 absolute ltr:right-0 rtl:-left-4 mt-2 w-[244px] shadow-dropdown-menu rounded-[15px] overflow-hidden border border-Gray-100 dark:border-Gray-700 bg-white dark:bg-dark-primary p-2 ring-0 focus:outline-hidden"
+              className="origin-top-right z-20 absolute ltr:right-0 rtl:-left-4 mt-2 w-[244px] shadow-dropdown-menu rounded overflow-hidden border border-Gray-100 dark:border-Gray-700 bg-white dark:bg-dark-primary p-2 ring-0 focus:outline-hidden"
             >
               <MenuItem>
                 <button

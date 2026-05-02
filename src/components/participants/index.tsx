@@ -1,14 +1,12 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useVirtual from 'react-cool-virtual';
-
 import ParticipantComponent from './participant';
 import RemoveParticipantAlertModal, {
   IRemoveParticipantAlertModalData,
 } from './removeParticipantAlertModal';
 import { SearchIconSVG } from '../../assets/Icons/SearchIconSVG';
 import { CloseIconSVG } from '../../assets/Icons/CloseIconSVG';
-
 import { store, useAppDispatch, useAppSelector } from '../../store';
 import { selectVisibleParticipants } from '../../store/slices/participantSlice';
 import { setActiveSidePanel } from '../../store/slices/bottomIconsActivitySlice';
@@ -117,7 +115,7 @@ const ParticipantsComponent = () => {
               name="search-participants"
               id="search-participants"
               placeholder="Search for Participant"
-              className="text-Gray-950 dark:text-white placeholder:text-Gray-600 dark:placeholder:text-white h-9 rounded-lg 3xl:rounded-[15px] bg-white dark:bg-dark-primary border border-Gray-200 dark:border-Gray-800 w-full pl-8 3xl:pl-10 outline-hidden text-xs 3xl:text-sm"
+              className="text-Gray-950 dark:text-white placeholder:text-Gray-600 dark:placeholder:text-white h-9 rounded-lg 3xl:rounded bg-white dark:bg-dark-primary border border-Gray-200 dark:border-Gray-800 w-full pl-8 3xl:pl-10 outline-hidden text-xs 3xl:text-sm"
               onChange={(e) => setSearchParticipant(e.target.value)}
             />
           </div>

@@ -87,8 +87,8 @@ documented below.
           exports.MASK_BLUR_RADIUS =
           exports.BLUR_FILTER_RADIUS =
             void 0;
-        exports.BLUR_FILTER_RADIUS = 15;
-        exports.MASK_BLUR_RADIUS = 8;
+        exports.BLUR_FILTER_RADIUS = 50;
+        exports.MASK_BLUR_RADIUS = 100;
         exports.MODEL_NAME = 'selfie_segmentation_landscape.tflite';
         exports.TFLITE_LOADER_NAME = 'tflite-1-0-0.js';
         exports.TFLITE_SIMD_LOADER_NAME = 'tflite-simd-1-0-0.js';

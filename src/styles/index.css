@@ -49,7 +49,7 @@
 .custom-range-track {
   position: relative;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 2px;
   cursor: pointer;
   touch-action: none;
 }
@@ -57,7 +57,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  border-radius: 10px 0 0 10px;
+  border-radius: 2px 0 0 2px;
   pointer-events: none;
 }
 .custom-range-thumb {

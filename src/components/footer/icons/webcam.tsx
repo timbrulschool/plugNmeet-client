@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { LocalTrack, Track } from 'livekit-client';
@@ -55,6 +55,9 @@ const WebcamIcon = () => {
   const virtualBackground = useAppSelector(
     (state) => state.bottomIconsActivity.virtualBackground,
   );
+  const mirrorCamera = useAppSelector(
+    (state) => state.bottomIconsActivity.mirrorCamera,
+  );
   const selectedVideoDevice = useAppSelector(
     (state) => state.roomSettings.selectedVideoDevice,
   );
@@ -66,6 +69,19 @@ const WebcamIcon = () => {
   );
 
   const { publishNewTrack, replaceTrack } = useWebcamPublisher();
+
+  // Republish live track when background or mirror setting changes.
+  // Skip on initial mount — the first publish is handled by onSelectedDevice.
+  const hasMounted = useRef(false);
+  useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+    if (!selectedVideoDevice || !isActiveWebcam) return;
+    publishNewTrack(selectedVideoDevice, undefined, virtualBackground).then();
+    //eslint-disable-next-line
+  }, [virtualBackground, mirrorCamera]);
 
   // for change in webcam lock setting
   useEffect(() => {
@@ -176,7 +192,7 @@ const WebcamIcon = () => {
   }
 
   const wrapperClasses = clsx(
-    'relative footer-icon cursor-pointer min-w-10 md:min-w-11 3xl:min-w-[52px] h-10 md:h-11 3xl:h-[52px] rounded-[15px] 3xl:rounded-[20px] border-[3px] 3xl:border-4',
+    'relative footer-icon cursor-pointer min-w-10 md:min-w-11 3xl:min-w-[52px] h-10 md:h-11 3xl:h-[52px] rounded 3xl:rounded border-[3px] 3xl:border-4',
     {
       'border-Red-100!': !isActiveWebcam && selectedVideoDevice !== '',
       'border-[rgba(124,206,247,0.25)]': isActiveWebcam,
@@ -187,7 +203,7 @@ const WebcamIcon = () => {
   );
 
   const camWrapClasses = clsx(
-    'footer-icon-bg cam-wrap relative cursor-pointer shadow-IconBox border border-Gray-300 dark:border-Gray-700 rounded-[12px] 3xl:rounded-2xl h-full w-full flex items-center justify-center transition-all duration-300 hover:bg-gray-100 dark:hover:bg-Gray-700 text-Gray-950 dark:text-white bg-white dark:bg-Gray-800',
+    'footer-icon-bg cam-wrap relative cursor-pointer shadow-IconBox border border-Gray-300 dark:border-Gray-700 rounded 3xl:rounded-2xl h-full w-full flex items-center justify-center transition-all duration-300 hover:bg-gray-100 dark:hover:bg-Gray-700 text-Gray-950 dark:text-white bg-white dark:bg-Gray-800',
     {
       'border-Red-200!': !isActiveWebcam && selectedVideoDevice !== '',
       'border-Red-200! dark:!border-Red-400 text-Red-400': isWebcamLocked,

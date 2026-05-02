@@ -182,7 +182,7 @@ const FromElems = ({
             {t('breakout-room.duration')}
           </label>
           <input
-            className="h-10 rounded-[15px] text-Gray-800 dark:text-white border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-transparent shadow-input w-full px-3 outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus"
+            className="h-10 rounded text-Gray-800 dark:text-white border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-transparent shadow-input w-full px-3 outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus"
             id="breakout-room-duration"
             type="number"
             value={roomDuration}
@@ -199,7 +199,7 @@ const FromElems = ({
             {t('breakout-room.welcome-msg')}
           </label>
           <textarea
-            className="h-20 rounded-[15px] text-Gray-800 dark:text-white border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-transparent shadow-input w-full px-3 py-2 outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus"
+            className="h-20 rounded text-Gray-800 dark:text-white border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-transparent shadow-input w-full px-3 py-2 outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus"
             id="breakout-room-welcome"
             onChange={(e) => setWelcomeMsg(e.currentTarget.value)}
             value={welcomeMsg}
@@ -207,7 +207,7 @@ const FromElems = ({
         </div>
         <div className="random-room-select mb-4 rtl:ml-6">
           <button
-            className="primary-button h-9 w-auto ml-auto px-5 cursor-pointer text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded-[15px] text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow"
+            className="primary-button h-9 w-auto ml-auto px-5 cursor-pointer text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow"
             onClick={randomSelection}
           >
             {t('breakout-room.random-selection')}
@@ -232,7 +232,7 @@ const FromElems = ({
       </div>
       <div className="flex justify-end mt-4">
         <button
-          className="primary-button h-9 w-auto px-5 cursor-pointer text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded-[15px] text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow"
+          className="primary-button h-9 w-auto px-5 cursor-pointer text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow"
           onClick={handleStartBreakoutRooms}
           disabled={isLoading}
         >

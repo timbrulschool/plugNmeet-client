@@ -129,7 +129,7 @@ const UserNotifications = () => {
       {({ open, close }) => (
         <>
           <PopoverButton
-            className={`w-7 md:w-8 h-7 md:h-8 flex items-center justify-center rounded-[10px] cursor-pointer ${open ? 'bg-Gray-50 dark:bg-Gray-800' : ''}`}
+            className={`w-7 md:w-8 h-7 md:h-8 flex items-center justify-center rounded cursor-pointer ${open ? 'bg-Gray-50 dark:bg-Gray-800' : ''}`}
           >
             {displayIcon(open)}
           </PopoverButton>
@@ -234,7 +234,7 @@ const UserNotifications = () => {
                       <div className="text flex-1 text-Gray-800 text-sm">
                         <p>
                           File uploaded successfully:{' '}
-                          <strong>“Assignment02.pdf”</strong>
+                          <strong>â€œAssignment02.pdfâ€</strong>
                         </p>
                         <span className="text-Gray-800 text-xs">12:04 AM</span>
                       </div>
@@ -249,7 +249,7 @@ const UserNotifications = () => {
                       <div className="text flex-1 text-Gray-800 text-sm">
                         <p>
                           <strong>Samuel Brooks</strong> uploaded a file:{' '}
-                          <strong>“Assignment.pdf”</strong>
+                          <strong>â€œAssignment.pdfâ€</strong>
                         </p>
                         <span className="text-Gray-800 text-xs">12:04 AM</span>
                       </div>

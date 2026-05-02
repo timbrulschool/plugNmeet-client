@@ -43,7 +43,7 @@ section.Toastify {
 }
 
 input.default-input {
-  @apply h-10 3xl:h-11 rounded-[15px] border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-transparent shadow-input w-full px-3 outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus text-sm 3xl:text-base text-Gray-950 dark:text-white;
+  @apply h-10 3xl:h-11 rounded border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-transparent shadow-input w-full px-3 outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus text-sm 3xl:text-base text-Gray-950 dark:text-white;
 }
 
 input.polls-checkbox::before {
@@ -58,7 +58,7 @@ input.polls-checkbox:checked:before {
 .scrollBar {
   overflow-x: hidden;
   &::-webkit-scrollbar-thumb {
-    @apply bg-Blue border-none rounded-[5px];
+    @apply bg-Blue border-none rounded;
   }
 
   &::-webkit-scrollbar-track {
@@ -98,7 +98,7 @@ input.polls-checkbox:checked:before {
   @apply h-[5px];
 }
 .private-m-tab .inner2::-webkit-scrollbar-thumb {
-  @apply bg-secondary-color border-none rounded-[5px];
+  @apply bg-secondary-color border-none rounded;
 } */
 
 .all-webcam-wrapper.total-cam-2 .total-items-2 .video-camera-item.its-me {
@@ -376,7 +376,7 @@ input.polls-checkbox:checked:before {
   @apply top-1/2 -translate-y-1/2;
 }
 .video-camera-item::before {
-  @apply absolute content-[""] w-full h-full border-[5px] border-solid border-transparent z-999 rounded-[15px] pointer-events-none;
+  @apply absolute content-[""] w-full h-full border-[5px] border-solid border-transparent z-999 rounded pointer-events-none;
 }
 .video-camera-item .camera-modules .camera-video-player {
   @apply flex h-full w-full absolute;
@@ -553,18 +553,18 @@ html[dir='rtl'] span.tooltip.tooltip-left::before {
 .range::-webkit-slider-runnable-track {
   background-color: rgba(128, 128, 128, 0.5);
   height: 10px;
-  border-radius: 5px;
+  border-radius: 2px;
   border: 1px solid transparent;
-  @apply bg-[rgba(128,128,128,0.5)] dark:bg-secondary-color/90 h-[10px] rounded-[5px] border border-solid border-transparent;
+  @apply bg-[rgba(128,128,128,0.5)] dark:bg-secondary-color/90 h-[10px] rounded border border-solid border-transparent;
 }
 .range::-moz-range-track {
-  @apply bg-[rgba(128,128,128,0.5)] dark:bg-secondary-color/90 h-[10px] rounded-[5px] border border-solid border-transparent;
+  @apply bg-[rgba(128,128,128,0.5)] dark:bg-secondary-color/90 h-[10px] rounded border border-solid border-transparent;
 }
 .range::-webkit-slider-thumb {
   @apply appearance-none rounded-full bg-primary-color dark:bg-white h-[18px] w-[18px] -mt-[5px];
 }
 .range::-moz-range-thumb {
-  @apply rounded-[20px] h-[18px] w-[18px] border-none bg-primary-color;
+  @apply rounded-full h-[18px] w-[18px] border-none bg-primary-color;
 }
 .range:active::-webkit-slider-thumb {
   @apply outline-hidden;
@@ -584,7 +584,7 @@ html[dir='rtl'] span.tooltip.tooltip-left::before {
 .breakout-room-list-item .timer {
   border-color: #fff;
   color: #fff;
-  border-radius: 8px;
+  border-radius: 2px;
   margin-left: 5px;
 }
 

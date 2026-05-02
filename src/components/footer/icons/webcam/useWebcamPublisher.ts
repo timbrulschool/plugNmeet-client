@@ -5,19 +5,22 @@ import {
   Track,
 } from 'livekit-client';
 
-import { useAppDispatch } from '../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 import { getMediaServerConnRoom } from '../../../../helpers/livekit/utils';
 import { getWebcamResolution, sleep } from '../../../../helpers/utils';
 import { updateIsActiveWebcam } from '../../../../store/slices/bottomIconsActivitySlice';
 import {
   BackgroundConfig,
   createVirtualBackgroundProcessor,
-  TwilioBackgroundProcessor,
+  createMirrorProcessor,
 } from '../../../../helpers/libs/TrackProcessor';
 
 const useWebcamPublisher = () => {
   const dispatch = useAppDispatch();
   const room = getMediaServerConnRoom();
+  const mirrorCamera = useAppSelector(
+    (state) => state.bottomIconsActivity.mirrorCamera,
+  );
   const publishing = useRef<boolean>(false);
 
   const replaceTrack = useCallback(
@@ -72,13 +75,17 @@ const useWebcamPublisher = () => {
 
       const resolution = getWebcamResolution();
       if (deviceId !== '') {
-        let processor: TwilioBackgroundProcessor | undefined;
+        let processor:
+          | ReturnType<typeof createVirtualBackgroundProcessor>
+          | ReturnType<typeof createMirrorProcessor>
+          | undefined;
         if (virtualBackground && virtualBackground.type !== 'none') {
-          processor = createVirtualBackgroundProcessor(virtualBackground);
-          resolution.height = 480;
-          resolution.width = 640;
-          resolution.frameRate = 24;
-          resolution.aspectRatio = undefined;
+          processor = createVirtualBackgroundProcessor(
+            virtualBackground,
+            mirrorCamera,
+          );
+        } else if (mirrorCamera) {
+          processor = createMirrorProcessor();
         }
 
         const track = await createLocalVideoTrack({
@@ -103,7 +110,7 @@ const useWebcamPublisher = () => {
       dispatch(updateIsActiveWebcam(true));
       publishing.current = false;
     },
-    [dispatch, room],
+    [dispatch, room, mirrorCamera],
   );
 
   return {

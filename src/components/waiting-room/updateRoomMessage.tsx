@@ -62,11 +62,11 @@ const UpdateRoomMessage = () => {
       <textarea
         value={message}
         onChange={(e) => setMessage(e.currentTarget.value)}
-        className="border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-dark-primary shadow-input block px-3 py-2 w-full h-20 rounded-[15px] outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus text-gray-950 dark:text-white"
+        className="border border-Gray-300 dark:border-Gray-800 bg-white dark:bg-dark-primary shadow-input block px-3 py-2 w-full h-20 rounded outline-hidden focus:border-[rgba(0,161,242,1)] focus:shadow-input-focus text-gray-950 dark:text-white"
       ></textarea>
       <button
         onClick={updateRoomMsg}
-        className="primary-button h-9 ml-auto cursor-pointer mt-2 px-5 text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded-[15px] text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow"
+        className="primary-button h-9 ml-auto cursor-pointer mt-2 px-5 text-sm font-medium bg-Blue hover:bg-white border border-[#0088CC] rounded text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow"
       >
         {t('waiting-room.update-msg')}
       </button>

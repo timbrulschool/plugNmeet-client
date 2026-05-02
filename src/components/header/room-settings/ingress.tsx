@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import {
@@ -97,7 +97,7 @@ const Ingress = () => {
           <button
             onClick={handleSubmit}
             disabled={isLoading}
-            className="primary-button h-8 px-5 flex items-center justify-center text-sm font-semibold bg-Blue hover:bg-white border border-[#0088CC] rounded-[15px] text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow cursor-pointer disabled:opacity-50"
+            className="primary-button h-8 px-5 flex items-center justify-center text-sm font-semibold bg-Blue hover:bg-white border border-[#0088CC] rounded text-white hover:text-Gray-950 transition-all duration-300 shadow-button-shadow cursor-pointer disabled:opacity-50"
           >
             {isLoading ? (
               <LoadingIcon

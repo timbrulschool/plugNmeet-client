@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 
@@ -35,7 +35,7 @@ const InsightsAiTextChatIcon = () => {
   }
 
   const wrapperClasses = clsx(
-    'ai-chat-f-icon hidden md:block relative footer-icon cursor-pointer w-10 md:w-11 3xl:w-[52px] h-10 md:h-11 3xl:h-[52px] rounded-[15px] 3xl:rounded-[18px] border-[3px] 3xl:border-4',
+    'ai-chat-f-icon hidden md:block relative footer-icon cursor-pointer w-10 md:w-11 3xl:w-[52px] h-10 md:h-11 3xl:h-[52px] rounded 3xl:rounded border-[3px] 3xl:border-4',
     {
       'border-[rgba(124,206,247,0.25)] dark:border-Gray-800':
         isActiveAiTextChat,
@@ -44,7 +44,7 @@ const InsightsAiTextChatIcon = () => {
   );
 
   const innerDivClasses = clsx(
-    'footer-icon-bg h-full w-full flex items-center justify-center rounded-[12px] 3xl:rounded-[15px] border border-Gray-300 dark:border-Gray-700 shadow transition-all duration-300 hover:bg-gray-100 dark:hover:bg-Gray-700 text-Gray-950 dark:text-white',
+    'footer-icon-bg h-full w-full flex items-center justify-center rounded 3xl:rounded border border-Gray-300 dark:border-Gray-700 shadow transition-all duration-300 hover:bg-gray-100 dark:hover:bg-Gray-700 text-Gray-950 dark:text-white',
     {
       'has-tooltip': showTooltip,
       'bg-gray-100 dark:bg-Gray-700': isActiveAiTextChat,

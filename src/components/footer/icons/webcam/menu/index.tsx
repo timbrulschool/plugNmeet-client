@@ -7,7 +7,7 @@ import { ArrowUp } from '../../../../../assets/Icons/ArrowUp';
 
 interface IWebcamMenuProps {
   currentRoom: Room;
-  isActiveWebcam: any;
+  isActiveWebcam: boolean;
   toggleWebcam: () => void;
 }
 
@@ -40,6 +40,7 @@ const WebcamMenu = ({
             >
               <WebcamMenuItems
                 currentRoom={currentRoom}
+                isActiveWebcam={isActiveWebcam}
                 toggleWebcam={toggleWebcam}
               />
             </Transition>

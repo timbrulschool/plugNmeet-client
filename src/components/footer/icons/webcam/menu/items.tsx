@@ -11,18 +11,21 @@ import {
   updateVirtualBackground,
 } from '../../../../../store/slices/bottomIconsActivitySlice';
 import { CheckMarkIcon } from '../../../../../assets/Icons/CheckMarkIcon';
+import { Camera } from '../../../../../assets/Icons/Camera';
 import { CameraOff } from '../../../../../assets/Icons/CameraOff';
 import BackgroundItems from '../../../modals/webcam/backgroundItems';
 import { BackgroundConfig } from '../../../../../helpers/libs/TrackProcessor';
 
 interface IWebcamMenuItemsProps {
   currentRoom: Room;
+  isActiveWebcam: boolean;
   toggleWebcam: () => void;
 }
 
 const WebcamMenuItems = ({
   toggleWebcam,
   currentRoom,
+  isActiveWebcam,
 }: IWebcamMenuItemsProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -112,11 +115,23 @@ const WebcamMenuItems = ({
         <MenuItem>
           {() => (
             <p
-              className="h-8 w-full flex items-center text-sm gap-2 leading-none font-medium text-red-700 px-2 rounded-lg transition-all duration-300 hover:bg-Red-600 hover:text-white"
+              className={`h-8 w-full flex items-center text-sm gap-2 leading-none font-medium px-2 rounded-lg transition-all duration-300 ${
+                isActiveWebcam
+                  ? 'text-red-700 hover:bg-Red-600 hover:text-white'
+                  : 'primaryColor hover:bg-Blue hover:text-white'
+              }`}
               onClick={toggleWebcam}
             >
-              <CameraOff classes={'h-4 w-auto'} />
-              {t('footer.icons.turn-off-webcam')}
+              {isActiveWebcam ? (
+                <CameraOff classes={'h-4 w-auto'} />
+              ) : (
+                <Camera classes={'h-4 w-auto'} />
+              )}
+              {t(
+                isActiveWebcam
+                  ? 'footer.icons.turn-off-webcam'
+                  : 'footer.icons.start-webcam',
+              )}
             </p>
           )}
         </MenuItem>
